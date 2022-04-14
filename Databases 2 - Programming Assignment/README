@@ -1,0 +1,34 @@
+COP4720 - Programming Assignment - Augusto Cohn - augustocohn@ufl.edu
+
+HOW TO RUN:
+1) Unpack cohn_augusto.tar with "tar -xzvf cohn_augusto.tar.gz"
+2) Run "make"
+3) Run "./rangeQ option database queries block_size"
+
+OPTIONAL:
+ - rangeQ will output the appropriate records to the terminal with cout. All records that are reported will be sorted on each dimension for each query. You can pipe the output of the program
+   to a text file and run diff to show the differences between outputs. This was used during testing to ensure consistency in the records reported from each index structure. 
+
+4) Run "./rangeQ option database queries block_size > output.txt"
+5) Run "diff output1.txt output2.txt"
+
+THINGS TO KNOW:
+1) There are output messages for each stage of the process from loading the files, to building the database to building and searching the structures. The outputs just inform the user what the program
+   is currently doing.
+2) At the end of the query outputs, the program will output the total amount of records reported. This was used to ensure that different index structures were consistent in the amount of records reported.
+3) When selecting option 0, it is ok to leave block_size as a command line parameter but, when using option 1 or 2 be sure to include the block_size parameter because it will cause the tree to not be built
+   properly.
+
+KNOWN BUGS:
+1) For large databases (projDB), when choosing a small block size, the program encounters a segmentation fault error that causes the program to crash. I believe that this is due to running
+   out of available memory. When 2 million records are being split into small blocks, there will be a ton of nodes needed to store the entire structure. This along with the already prestored database and 
+   queries, I believe is causing the program to crash. With small databases, this is not an issue.
+   
+KD-TREE:
+- I made the decision to split the record by the average between the minimum and maximum value on the given dimension. I wanted to split the data as evenly as I could and for the sample databases provided, 
+  the tree was balanced. 
+
+MY-TREE:
+- My tree is built by splitting the data on the dimension that has the greatest range in the given dimension. Each level is not guarenteed to be split on the same dimension. I wanted to try to see
+  if this method resulted in faster query times and in the end, there seemed to be a slight decrease in search time for My-tree. My-tree uses the same splitting method as the KD-tree in that I split
+  the data at the average of the minimum and maximum value of the dimension with the largest range. 
